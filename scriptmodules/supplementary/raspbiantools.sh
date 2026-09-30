@@ -55,8 +55,11 @@ function lxde_raspbiantools() {
 
     setConfigRoot "ports"
     addPort "lxde" "lxde" "Desktop" "XINIT:startx"
-    if (isPlatform "rpi4" || isPlatform "rpi5")  && [[ "$__os_debian_ver" -ge 12 ]]; then
+    if (isPlatform "rpi3" || isPlatform "rpi4" || isPlatform "rpi5")  && [[ "$__os_debian_ver" -eq 12 ]]; then
         addPort "wayfire" "wayfire" "Desktop (Wayland)" "wayfire-pi"
+    fi
+    if (isPlatform "rpi3" || isPlatform "rpi4" || isPlatform "rpi5")  && [[ "$__os_debian_ver" -eq 13 ]]; then
+        addPort "labwc" "labwc" "Desktop (Wayland)" "labwc-pi"
     fi
     enable_autostart
 }
