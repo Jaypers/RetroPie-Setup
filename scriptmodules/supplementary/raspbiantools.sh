@@ -39,8 +39,15 @@ function apt_upgrade_raspbiantools() {
 }
 
 function lxde_raspbiantools() {
-    aptInstall --no-install-recommends xorg lxde
-    aptInstall raspberrypi-ui-mods rpi-chromium-mods gvfs
+    # On `trixie` rpd-common conflicts raspberrypi-ui-mods, lxde, lxpanel
+    if [[ "$__os_debian_ver" -ge 13 ]]; then
+      aptInstall --no-install-recommends rpd-wayland-core rpd-theme rpd-preferences
+      aptInstall gvfs
+    else
+      aptInstall --no-install-recommends xorg lxde
+      aptInstall raspberrypi-ui-mods rpi-chromium-mods gvfs
+    fi
+
     # On `buster`, disable PulseAudio since it messes up the audio settings
     # remove the lxpanel plugin for PulseAudio volume, to prevent a crash due to missing PulseAudio
     #  and install the volume lxpanel plugin that supports ALSA
