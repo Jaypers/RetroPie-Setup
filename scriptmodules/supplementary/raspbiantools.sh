@@ -39,7 +39,11 @@ function apt_upgrade_raspbiantools() {
 }
 
 function lxde_raspbiantools() {
-    aptInstall --no-install-recommends xorg lxde
+    if (isPlatform "rpi3")  && [[ "$__os_debian_ver" -ge 13 ]]; then
+        echo "Rpi3 detected, using RaspiOS desktop environment."
+    else
+        aptInstall --no-install-recommends xorg lxde
+    fi
     aptInstall raspberrypi-ui-mods rpi-chromium-mods gvfs
     # On `buster`, disable PulseAudio since it messes up the audio settings
     # remove the lxpanel plugin for PulseAudio volume, to prevent a crash due to missing PulseAudio

@@ -31,7 +31,7 @@ function build_lr-snes9x2010() {
     isPlatform "arm" && platform+="armv"
     isPlatform "neon" && platform+="neon"
     if [[ -n "$platform" ]]; then
-        make -f Makefile.libretro platform="$platform"
+        make -f Makefile.libretro platform="$platform" LIBM=-lm
     else
         make -f Makefile.libretro
     fi
